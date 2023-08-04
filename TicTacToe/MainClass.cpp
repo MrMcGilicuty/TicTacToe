@@ -140,10 +140,6 @@ int main()
     sf::RectangleShape lineV;
     sf::RectangleShape lineH;
 
-    //creates texture to bloomify
-    sf::RenderTexture renderTexture;
-    renderTexture.create(windowWidth, windowHeight);
-
     //draws board
     //vertical lines
     lineV.setSize(sf::Vector2f(windowWidth + 20, cellHeight));
@@ -203,12 +199,7 @@ int main()
                 turn = !turn;
             }
         }
-        sf::Shader bloomShader;
-        if (!bloomShader.loadFromFile("bloom_shader.frag", sf::Shader::Fragment)) {
-            // Log the error to the console
-            std::cerr << "Error loading shader: " << bloomShader.isAvailable() << std::endl;
-
-        }
+        
         // Get the start and end positions of the winning line
         sf::Vector2f start = checkWinner(board, true, cellWidth, cellHeight);
         sf::Vector2f end = checkWinner(board, false, cellWidth, cellHeight);
@@ -261,16 +252,6 @@ int main()
                 }
             }
         }
-
-        renderTexture.display();
-        // Apply the bloom shader to the off-screen buffer
-        sf::RenderStates bloomRenderStates;
-        bloomRenderStates.shader = &bloomShader;
-        bloomRenderStates.blendMode = sf::BlendAdd; // You can adjust the blend mode for different bloom effects
-
-        // Draw the off-screen buffer with the bloom shader applied to the window
-        screen.draw(sf::Sprite(renderTexture.getTexture()), bloomRenderStates);
-
         screen.display();
     }
 
