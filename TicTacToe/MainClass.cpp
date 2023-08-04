@@ -107,10 +107,12 @@ sf::Vector2f checkWinner(std::vector<std::vector<int>>& board, bool start, float
 
 //returns the line to be drawn
 sf::RectangleShape winLine(const sf::Vector2f& start, const sf::Vector2f& end, sf::Color color) {
+    //stinky trig required here
     sf::RectangleShape line;
     line.setPosition(start);
     line.setSize(sf::Vector2f(std::hypot(end.x - start.x, end.y - start.y), 5.0f));
     line.setFillColor(color);
+    //imma be honest I didn't make this formula at all
     line.setRotation(std::atan2(end.y - start.y, end.x - start.x) * 180.0f / PI); // Use the manually defined PI
     return line;
 }
